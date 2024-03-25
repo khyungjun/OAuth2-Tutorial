@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>OAuth2 Tutorial by Springboot</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>OAuth2 Tutorial</h1>
+    <div class="col-md-12">
+    	<!-- 로그인 기능 영역 -->
+        <div class="row">
+            <div class="col-md-6">
+                {{#userName}} <!-- 머스테치는 다른 언어와 같은 if문(if userName != null 등)을 제공하지 않는다. true/false 여부만 판단할 뿐이다. 그래서 머스테치에서는 항상 최종값을 넘겨줘야 한다. 여기서도 역시 userName이 있다면 userName을 노출시키도록 구성했다. -->
+                    Logged in as: <span id="user">{{userName}}</span>
+                    <a href="/logout" class="btn btn-info active" role="button">Logout</a> <!-- 스프링 시큐리티에서 기본적으로 제공하는 로그아웃 URL이다. 즉, 개발자가 별도로 저 URL에 해당하는 컨트롤러를 만들 필요가 없다. SecurityConfig 클래스에서 URL을 변경할 순 있지만 기본 URL을 사용해도 충분하니 여기서는 그대로 사용한다. -->
+                {{/userName}}
+                
+                {{^userName}} <!-- 머스테치에서 해당 값이 존재하지 않는 경우에는 ^를 사용한다. 여기서는 userName이 없다면 로그인 버튼을 노출시키도록 구성했다. -->
+                    <a href="/oauth2/authorization/google" role="button"><img src = "images/login_google.png" style="width:25%"></a> <!-- 스프링 시큐리티에서 기본적으로 제공하는 로그인 URL이다. 로그아웃 URL과 마찬가지로 개발자가 별도의 컨트롤러를 생성할 필요가 없다. -->
+                    <a href="/oauth2/authorization/naver" role="button"><img src = "images/login_naver.png" style="width:25%"></a> <!-- 네이버 로그인 URL은 application-oauth.properties에 등록한 redirect_uri_template 값에 맞춰 자동으로 등록된다. /oauth2/authorization/ 까지는 고정이고 마지막 Path만 각 소셜 로그인 코드를 사용하면 된다. 여기서는 naver가 마지막 Path가 된다. -->
+					<a href="/oauth2/authorization/kakao" role="button"><img src = "images/login_kakao.png" style="width:25%"></a>
+               {{/userName}}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
